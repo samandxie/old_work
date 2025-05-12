@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="_fragment::head(~{::title},~{})">
+    <meta charset="utf-8"/>
+    <title>网上购书系统</title>
+    <!-- 引入公共样式和 Layui 样式 -->
+    <link href="../static/css/public.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/lib/layui/css/layui.css" rel="stylesheet" type="text/css"/>
+    <!-- 引入 Layui 脚本 -->
+    <script charset="utf-8" src="../static/lib/layui/layui.js" type="text/javascript" defer></script>
+</head>
+<body>
+<!-- 头部导航 -->
+<div class="header" th:replace="_fragment::header(null)"></div>
+
+<!-- 搜索栏 -->
+<div class="search-bar">
+    <div class="layui-container">
+        <div class="search-input">
+            <input autocomplete="off" class="layui-input" id="keyword-input" name="keyword" placeholder="输入搜索内容" type="text"/>
+            <button class="layui-btn" id="search-btn" type="button">搜索</button>
+        </div>
+    </div>
+    <hr/>
+</div>
+
+<!-- 轮播图、猜你喜欢和排行榜 -->
+<div class="layui-container body-header">
+    <div class="likes">
+        <div class="likes-header">
+            <h3>猜你喜欢</h3>
+            <a class="change-book" href="javascript:void(0)" id="change-book-btn">换一个</a>
+        </div>
+        <div class="likes-list" id="likes-list"></div>
+    </div>
+    <div class="layui-carousel" id="banner">
+        <div carousel-item="" class="banner-list">
+            <!-- 使用懒加载优化图片加载 -->
+            <div><a href="index/books/details/1050"><img alt="热门图书" src="/images/ads_deepseek.jpg" loading="lazy"/></a></div>
+            <div><a href="index/books/details/1049"><img alt="新书推荐" src="/images/ads_2.jpg" loading="lazy"/></a></div>
+            <div><a href="index/books/details/1051"><img alt="促销活动" src="/images/ads_3.jpg" loading="lazy"/></a></div>
+        </div>
+    </div>
+    <div class="rankings">
+        <div class="rankings-title">
+            <h3>排行榜</h3>
+        </div>
+        <div class="ranking-book-list" id="ranking-books-list"></div>
+    </div>
+</div>
+
+<!-- 新书上架 -->
+<div class="layui-container new-books">
+    <div class="section-title">
+        <h2>新书上架</h2>
+        <a class="more" href="/index/books?sort=new">更多 &gt;&gt;</a>
+    </div>
+    <div class="book-list" id="new-books-list"></div>
+</div>
+
+<!-- 分类标签和分页 -->
+<div class="layui-container">
+    <div class="layui-tab layui-tab-brief" lay-filter="categoryTabBrief">
+        <ul class="layui-tab-title" id="category_tag" style="text-align: center;">
+            <li lay-id="search">搜索结果</li>
+            <li class="layui-this">全部</li>
+        </ul>
+        <div class="layui-tab-content" id="content"></div>
+    </div>
+    <div class="page-util" id="page-util" style="text-align: center;"></div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer" th:replace="_fragment::footer"></div>
+<div  th:replace="_fragment::ai-chat-box"></div>
+
+
+<!-- 图书卡片模板 -->
+<script id="book-card-tpl" type="text/html">
+    {{# layui.each(d,function(index,item){   }}
+    <div class="book-card">
+        <a href="/index/books/details/{{item.bookId}}"><img src="/images/book_images/{{item.image}}"
+                                                            alt="{{item.bookName}}" loading="lazy"/></a>
+        <p class="name">
+            <a href="/index/books/details/{{item.bookId}}" title="{{item.description}}">{{item.bookName}}</a>
+        </p>
+        <p class="author" title="{{item.author}}">{{item.author}}</p>
+        <p class="price">
+            <span class="layui-icon layui-icon-rmb">&nbsp;{{item.price}}</span>
+        </p>
+    </div>
+    {{#    });    }}
+</script>
+
+</body>
+</html>

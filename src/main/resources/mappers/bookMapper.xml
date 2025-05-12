@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yu.Mapper.BookMapper">
+    <resultMap id="BaseResultMap" type="com.yu.pojo.Book">
+        <id column="book_id" property="bookId" jdbcType="INTEGER"/>
+        <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="isbn" property="isbn" jdbcType="VARCHAR"/>
+        <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="press" property="press" jdbcType="VARCHAR"/>
+        <result column="pub_date" property="pubDate" jdbcType="DATE"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <association property="category" column="category_code" javaType="com.yu.pojo.Category"
+                     select="com.yu.Mapper.CategoryMapper.selectByCategoryCode"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        book_id, category_code, book_name, isbn, author, press, pub_date, image, description, price, stock, create_time
+    </sql>
+
+    <select id="selectByBooks" parameterType="com.yu.pojo.Book" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from book
+        <where>
+            <if test="bookId !=null ">
+                book_id = #{bookId,jdbcType=INTEGER}
+            </if>
+            <if test="bookName != null">
+                and  book_name = #{bookName,jdbcType=VARCHAR}
+            </if>
+            <if test="isbn != null">
+                and  isbn = #{isbn,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>

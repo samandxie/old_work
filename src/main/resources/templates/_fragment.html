@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title,style)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}"></title>
+    <!-- 引入 jQuery UI CSS -->
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/public.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/layui/css/layui.css}" />
+    <script th:src="@{/lib/layui/layui.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/index.js}" type="text/javascript" charset="utf-8"></script>
+    <style th:replace="${style}"></style>
+</head>
+<body>
+<!--body导航栏切片-->
+<div class="header" th:fragment="header(pageName)">
+    <div class="layui-container">
+        <div class="logo" style="float: left;">
+            <a th:href="@{/index}">网上购书系统</a>
+        </div>
+        <ul class="layui-nav layui-bg-green" style="float: right;" th:if="${session.user!=null}">
+            <li class="layui-nav-item" th:classappend="${pageName=='cart'?'layui-this':''}">
+                <a th:href="@{|/${session.user.userName}/shopping_cart|}">购物车</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <!--<img src="//t.cn/RCzsdCq" class="layui-nav-img">-->
+                    [[${session.user.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                    <dd><a th:href="@{|/${session.user.userName}/orders|}">个人订单</a></dd>
+                    <dd><a th:href="@{|/${session.user.userName}/user_center|}">个人中心</a></dd>
+                    <dd><a th:href="@{/logout}">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-bg-green" style="float: right;" th:if="${session.user==null}">
+            <li class="layui-nav-item">
+                <a th:href="@{/login}">登录</a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/register}">注册</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--body底部栏切片-->
+<div class="footer" th:fragment="footer">
+    &copy; 2025
+</div>
+
+<!-- AI Chat Component 添加到模板底部 -->
+<div th:fragment="ai-chat-box" class="ai-chat-container" id="ai-chat-container">
+    <div class="ai-chat-icon" id="ai-chat-icon">💬</div>
+    <div class="ai-chat-box" id="ai-chat-box">
+        <div class="ai-chat-header">
+            <span>AI 助手</span>
+            <span id="ai-chat-close" style="cursor:pointer;">✖</span>
+        </div>
+        <div class="ai-chat-content" id="ai-chat-content"></div>
+        <div class="ai-chat-input">
+            <input id="ai-chat-input" placeholder="输入您的问题..." type="text"/>
+            <button id="ai-chat-send">发送</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

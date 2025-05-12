@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="cn" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+<div class="register-page">
+    <div class="form-container">
+        <p class="title">用户注册</p>
+        <form class="layui-form" id="register-form">
+            <div class="input-group">
+                <label for="username">用户名</label>
+                <input type="text" name="username" id="username" lay-verify="required|username" lay-verType="tips" lay-reqText="请输入用户名" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="email">邮箱</label>
+                <input type="email" name="email" id="email" lay-verify="required|email" lay-verType="tips" lay-reqText="请输入邮箱">
+            </div>
+            <div class="input-group">
+                <label for="password">密码</label>
+                <input type="password" name="password" id="password" lay-verify="password" lay-verType="tips">
+            </div>
+            <div class="forgot"></div>
+            <button class="signup" lay-submit lay-filter="register">注册</button>
+        </form>
+        <p class="toSign">已有帐户?
+            <a href="login" type="info">前往登录</a>
+        </p>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/lib/layui/layui.js"></script>
+<script>
+    layui.use(function(){
+        let form = layui.form;
+        let layer = layui.layer;
+        let $ = layui.jquery;
+        // 表单验证
+        form.verify({
+            username: function (value, elem) {
+                if (value.length < 3) {
+                    return '用户名不能少于3个字符';
+                }
+            },
+            password: function (value, elem) {
+                if (value.length < 6) {
+                    return '密码不能少于6个字符';
+                }
+            },
+            email: function(value, elem) {
+                var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+                if (!reg.test(value)) {
+                    return '请检查邮箱格式';
+                }
+            }
+        })
+        // 提交事件
+        form.on('submit(register)', function(data,e){
+            var field = data.field; // 获取表单字段值
+            const params = new URLSearchParams();
+            console.log(field);
+            params.append('userName', field.username);
+            params.append('password', field.password);
+            params.append('email', field.email)
+            //使用axios处理请求
+            axios.post("user/register", params, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    layer.msg('注册成功', {icon: 1, time: 1000}, function () {
+                        window.location.href = 'login';
+                    });
+                } else {
+                    layer.msg(res.data.message, {icon: 2, time: 2000})
+                }
+            }).catch(error => {
+                console.error('请求出错:', error);
+                layer.msg('请求出错，请稍后重试', {icon: 2, time: 2000});
+            })
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

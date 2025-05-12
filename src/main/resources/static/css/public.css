@@ -1,0 +1,425 @@
+html {
+    background-color: #e7e7e7;
+    color: #444;
+}
+
+body {
+    margin: 0;
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+}
+
+.header {
+    background-color: #009688;
+    height: 60px;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
+.footer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    background-color: #009688;
+    z-index: 1000;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 18px;
+    color: white;
+}
+
+/* 轮播图样式 */
+.layui-carousel {
+    width: 55%;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 320px !important;
+    background-color: white;
+}
+
+.layui-carousel img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    background-color: white;
+}
+
+/* 轮播图指示器样式 */
+.layui-carousel > [carousel-item] {
+    width: 100%;
+}
+
+.layui-carousel > [carousel-item] > * {
+    width: 100%;
+}
+
+.layui-carousel-ind {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10;
+}
+
+.layui-carousel-ind li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.layui-carousel-ind li.layui-this {
+    background: #fff;
+}
+
+
+/* 区域标题样式 */
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+    color: #333;
+    margin: 0;
+}
+
+.section-title .more {
+    color: #009688;
+    font-size: 14px;
+}
+
+.section-title .more:hover {
+    text-decoration: underline;
+}
+
+/* 书籍列表样式 */
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+
+/* 其他原有样式 */
+.admin-child {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 65px;
+    min-width: 100%;
+    line-height: 36px;
+    padding: 5px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    border: 1px solid #eee;
+    background-color: #fff;
+    z-index: 100;
+    border-radius: 2px;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.body-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    margin: 20px 0;
+    min-height: 340px;
+    overflow: hidden;
+}
+.likes {
+    width: 20%;
+    padding: 10px;
+    min-height: 340px; /* 添加固定高度 */
+}
+
+.rankings {
+    width: 20%;
+    padding: 10px;
+    min-height: 340px; /* 添加固定高度 */
+}
+
+.likes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.likes-header h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.change-book {
+    color: #009688;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.change-book:hover {
+    text-decoration: underline;
+}
+
+.likes-list {
+    padding: 0;
+    border-radius: 0;
+}
+
+.likes-list .book-card {
+    height: 300px; /* 设置猜你喜欢卡片高度 */
+    margin: 0; /* 移除外边距 */
+}
+
+.likes-list .book-card a img {
+    height: 180px; /* 设置猜你喜欢卡片图片高度 */
+}
+
+.likes-list .book-card .name {
+    height: 36px; /* 调整书名高度 */
+    font-size: 14px; /* 调整字体大小 */
+}
+
+.likes-list .book-card .author {
+    font-size: 12px; /* 调整作者字体大小 */
+}
+
+.likes-list .book-card .price {
+    font-size: 16px; /* 调整价格字体大小 */
+}
+
+.logo a {
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    font-family: sans-serif;
+    line-height: 60px;
+}
+
+.logo a:hover {
+    color: #ec7814;
+}
+
+.search-bar {
+    margin: 10px 0;
+}
+
+.search-input {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.search-input input {
+    width: 70%;
+    margin-right: 5%;
+    float: left;
+}
+
+.search-input button {
+    width: 25%;
+}
+
+.layui-tab-content#content {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 设置为 5 列 */
+    gap: 20px; /* 设置元素之间的间距 */
+    padding: 20px; /* 给容器添加内边距 */
+    height: 800px; /* 设置固定高度 */
+}
+
+.book-card {
+    background-color: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+    height: 350px; /* 设置书籍卡片固定高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+.book-card a img {
+    text-align: center;
+    width: 100%;
+    height: 220px; /* 设置图片固定高度 */
+    object-fit: cover; /* 保持图片比例 */
+}
+
+.book-card .name,
+.book-card .author,
+.book-card .price {
+    margin-top: 10px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.book-card .name {
+    font-size: 16px;
+    line-height: 1.4;
+    height: 44px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.book-card .author {
+    color: #666;
+    font-size: 14px;
+}
+
+.book-card .price {
+    color: #ff6700;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.book-card p {
+    overflow: hidden;
+    height: 18px;
+    word-break: break-all;
+}
+
+.img-hover {
+    color: #ec7814;
+    text-decoration: underline;
+}
+
+.book-card .name a:hover {
+    color: #ec7814;
+    text-decoration: underline;
+}
+
+/* 登录注册表单 */
+.login-form {
+    background-color: white;
+    width: 350px;
+    padding: 20px 75px 20px 0;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 12px 11px 2px 0 rgba(0, 0, 0, 0.42);
+}
+
+.login-box h1 {
+    text-align: center;
+    font-weight: bold;
+    color: #393939;
+}
+
+.login-box .login-form a:hover {
+    color: #01AAED;
+    text-decoration: underline;
+}
+
+.breadcrumb {
+    margin: 10px 50px;
+}
+
+.rankings {
+    width: 20%;
+    padding: 10px;
+}
+
+.rankings-title h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.ranking-book-list {
+    background: #fff; /* 从#f8f8f8改为白色 */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 10px;
+    margin: 8px 0;
+    background: #fff; /* 确保背景也是白色 */
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.ranking-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.rank-number {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: #009688;
+    color: white;
+    border-radius: 50%;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.rank-name {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+    font-size: 14px;
+}
+
+.ranking-item a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.ranking-item:hover a {
+    color: #009688;
+}
+
+.address-card-select:hover {
+    border-color: #ddd !important;
+    background-color: #f9f9f9 !important;
+}
+
+.address-card-select.selected {
+    border-color: #1E88E5 !important;
+    background-color: #f5f9ff !important;
+}

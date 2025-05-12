@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="_usercenterfragment::head(~{::title},~{})">
+        <meta charset="utf-8">
+        <title>个人中心</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/public.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/user_center.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/lib/layui/css/layui.css"/>
+        <script src="../static/lib/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../static/js/public.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+    <div class="layui-layout layui-layout-admin">
+        <div th:replace="_usercenterfragment::header"></div>
+        <div th:replace="_usercenterfragment::side('user_center')"></div>
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class = "user_info layui-form">
+                <div class="user_pic">
+                    <label class="layui-form-label">头像：</label>
+                    <img class="userPic" id="userPic" th:src="@{|/images/user_pic/${user.userPic}|}" th:alt="${user.userName}" width="150" height="150"/>
+                    <span class="hover-text">更换头像</span>
+                </div>
+                <div class="user_nickname">
+                    <label class="layui-form-label user_nickname">昵称：</label>
+                    <input  type="text" th:value="${user.userName}" placeholder="请输入昵称" maxlength="15">
+                </div>
+                <div class="user_email">
+                    <label class="layui-form-label user_email">邮箱：</label>
+                    <input  type="text" th:value="${user.email}" placeholder="请输入邮箱">
+                </div>
+                <div class = "save">
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="save">保存</button>
+                </div>
+
+            </div>
+        </div>
+        <div th:replace="_adminfragment::footer"></div>
+    </div>
+    <script>
+        layui.use(['form','layer', 'jquery','upload'], function(){
+            var form = layui.form;
+            var layer = layui.layer;
+            var $ = layui.jquery;
+            var upload = layui.upload;
+
+            let uploadInst = upload.render({
+                elem: '#userPic', // 绑定到用户头像元素
+                url: '/upload/user_pic', // 修改为头像上传接口
+                accept: 'images',
+                acceptMime: 'image/*',
+                size: 1024*2,
+                field: 'userPic', // 修改字段名
+                done: function (res) {
+                    if(res.code!==0){
+                        return layer.msg(res.message,{icon:2});
+                    }
+                    // 上传成功后更新头像显示
+                    $("#userPic").attr("src",'/images/user_pic/'+res.data);
+                    return layer.msg("头像更换成功",{icon:1});
+                },
+                error: function () {
+                    layer.msg("上传失败，请重试",{icon:2});
+                }
+            });
+
+            // 监听提交
+            form.on('submit(save)', function(data){
+                // 显示加载中
+                var index = layer.load(1);
+
+                // 获取表单数据
+                var formData = {
+                    userName: $('.user_nickname input').val(),
+                    email: $('.user_email input').val()
+                };
+
+                // 发送PUT请求
+                $.ajax({
+                    url: '/user_center/update',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(res) {
+                        layer.close(index);
+                        if(res.code === 0) {
+                            layer.msg('保存成功', {icon: 1});
+                            // 可选：刷新页面或更新局部数据
+                            setTimeout(function(){
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            layer.msg(res.message || '保存失败', {icon: 2});
+                        }
+                    },
+                    error: function() {
+                        layer.close(index);
+                        layer.msg('请求失败，请稍后再试', {icon: 2});
+                    }
+                });
+
+                return false; // 阻止表单跳转
+            });
+        });
+    </script>
+    </body>
+</html>

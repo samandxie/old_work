@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="login-page">
+    <div class="form-container">
+        <p class="title">用户登录</p>
+        <form class="layui-form" ID="login-form">
+            <div class="input-group">
+                <label for="username">用户名</label>
+                <input id="username" type="text" name="username" lay-verify="required" lay-verType="tips" lay-reqText="请输入用户名">
+            </div>
+
+            <div class="input-group">
+                <label for="password">密码</label>
+                <input id="password" class="input" type="password" name="password" lay-verify="required|password" lay-verType="tips" lay-reqText="请输入密码">
+                <div class="admin-forgot">
+                    <a href="admin/login">管理员登录</a>
+                    <a href="#">忘记密码 ?</a>
+                </div>
+            </div>
+
+            <button class="sign" lay-submit lay-filter="login">登录</button>
+
+        </form>
+
+        <p class="toSignup">没有帐户?
+            <a href="register" type="info" >前往注册</a>
+        </p>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://cdn.mengze.vip/npm/axios/dist/axios.min.js"></script>
+<script src="/lib/layui/layui.js"></script>
+<script>
+    layui.use(function(){
+        let form = layui.form;
+        let layer = layui.layer;
+        let $ = layui.jquery;
+        // 表单验证
+        form.verify({
+            password: function (value, elem) {
+                if (value.length < 6) {
+                    return '密码不能小于6位';
+                }
+            }
+        })
+        // 提交事件
+        form.on('submit(login)', function(data){
+            let field = data.field; // 获取表单字段值
+            console.log(field);
+            const params = new URLSearchParams();
+            params.append('userName', field.username);
+            params.append('password', field.password);
+            //使用axios处理请求
+            axios.post("user/login", params, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            }).then(res => {
+                console.log(res);
+                if (res.data.code === 0) {
+                    layer.msg('登录成功', {icon: 1, time: 1000}, function () {
+                        localStorage.setItem('token', res.data.data)
+                        document.cookie = `token=${res.data.data}; path=/; max-age=3600`;
+                        console.log(document.cookie);
+                        window.location.href = 'index';
+                    });
+                } else {
+                    layer.msg(res.data.message, {icon: 2, time: 2000})
+                }
+            }).catch(error => {
+                console.error('请求出错:', error);
+                layer.msg('登录请求出错，请稍后重试', {icon: 2, time: 2000});
+            })
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

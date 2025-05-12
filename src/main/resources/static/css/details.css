@@ -1,0 +1,89 @@
+/* 解决浮动元素导致父元素高度塌陷问题 */
+.layui-container::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* 给 body 添加底部边距，避免被固定底部元素覆盖 */
+body {
+	margin-bottom: 50px; /* 根据 footer 的高度调整 */
+}
+
+.book-detail-box {
+	position: relative;
+	background-color: white;
+	border-radius: 15px;
+	padding: 20px;
+	margin: 20px 50px;
+	display: flex; /* 使用 Flexbox 布局 */
+	align-items: flex-start;
+}
+
+.book-detail-box img {
+	width: 250px;
+}
+
+.book-detail-box .details-info {
+	padding: 25px 50px;
+	flex: 1; /* 让 details-info 自动填充剩余空间 */
+	width: auto; /* 移除固定宽度 */
+}
+
+.book-detail-box .details-info p {
+	margin: 5px;
+}
+
+.book-detail-box .details-info .name {
+	font-size: 20px;
+	/* color: #01AAED; */
+	/*font-style: oblique;*/
+}
+
+.book-detail-box .details-info .desc {
+	color: #aaa;
+}
+
+.book-detail-box .details-info .price {
+	color: red;
+	font-weight: bold;
+}
+
+.layui-container .btn {
+	margin: 0px 50px;
+	float: right;
+}
+
+.layui-container .btn .qty-input {
+	padding: 5px;
+	margin-right: 20px;
+}
+
+.footer {
+	bottom: 0px;
+	position: fixed;
+	width: 100%;
+}
+
+/* 添加在文件末尾 */
+.oder-popup {
+    padding: 20px;
+}
+
+.oder-popup .layui-form-item {
+    margin-bottom: 15px;
+}
+
+.oder-popup .layui-form-label {
+    width: 100px;
+}
+
+.oder-popup .layui-input-block {
+    margin-left: 100px;
+}
+
+.oder-popup .layui-btn {
+    margin-right: 10px;
+}
+
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title,style)">
+    <meta charset="utf-8">
+    <title th:replace="${title}">个人中心</title>
+    <script th:src="@{https://cdn.tailwindcss.com}"></script>
+    <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/layui/css/layui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user_center.css}"/>
+    <script th:src="@{/lib/layui/layui.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/js/public.js}" type="text/javascript" charset="utf-8"></script>
+    <style th:replace="${style}"></style>
+    <script>
+        tailwind.config = {
+            important: true,
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#17ac9e',
+                        secondary: '#17ac9e',
+                        neutral: '#F5F7FA',
+                        dark: '#333333',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .address-card {
+                @apply bg-white rounded-lg shadow-md p-5 mb-4 border-l-4 transition-all duration-300 hover:shadow-lg;
+            }
+            .address-card-default {
+                @apply border-primary;
+            }
+            .address-card-normal {
+                @apply border-gray-200 hover:border-primary;
+            }
+            .btn-hover {
+                @apply transition-all duration-300 hover:shadow-md;
+            }
+            .fade-in {
+                animation: fadeIn 0.3s ease-in-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layui-header" th:fragment="header">
+    <div class="layui-logo">个人中心</div>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item"><a th:href="@{/}">回到首页</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;" th:if="${session.user}">
+                [[${session.user.userName}]]
+            </a>
+        </li>
+        <li class="layui-nav-item"><a th:href="@{/logout}">退出</a></li>
+    </ul>
+</div>
+
+<div class="layui-side layui-bg-black" th:fragment="side(pageName)">
+    <div class="layui-side-scroll">
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <li class="layui-nav-item" th:classappend="${pageName=='order'?'layui-this':''}">
+                <a th:href="@{|/${session.user.userName}/user_center|}">个人信息</a>
+            </li>
+            <li class="layui-nav-item" th:classappend="${pageName=='user'?'layui-this':''}"><a
+                    th:href="@{|/${session.user.userName}/user_center_orders|}">订单管理</a></li>
+            <li class="layui-nav-item" th:classappend="${pageName=='addBook'?'layui-this':''}"><a
+                    th:href="@{|/${session.user.userName}/user_center_address|}">地址管理</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-footer" th:fragment="footer">
+    © 2025
+</div>
+
+</body>
+</html>

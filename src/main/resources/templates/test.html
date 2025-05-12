@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chat Demo</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <style>
+        .ai-chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            width: 300px;
+        }
+        .ai-chat-icon {
+            width: 50px;
+            height: 50px;
+            background: #1E88E5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .ai-chat-box {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-top: 10px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .ai-chat-header {
+            background: #1E88E5;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 8px 8px 0 0;
+        }
+        .ai-chat-content {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .ai-chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        .ai-chat-input input {
+            flex: 1;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .ai-chat-input button {
+            margin-left: 8px;
+            background: #1E88E5;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="ai-chat-container" id="ai-chat-container">
+    <div class="ai-chat-icon" id="ai-chat-icon">💬</div>
+    <div class="ai-chat-box" id="ai-chat-box">
+        <div class="ai-chat-header">
+            <span>AI 助手</span>
+            <span style="cursor:pointer;" id="ai-chat-close">✖</span>
+        </div>
+        <div class="ai-chat-content" id="ai-chat-content"></div>
+        <div class="ai-chat-input">
+            <input type="text" id="ai-chat-input" placeholder="输入您的问题..." />
+            <button id="ai-chat-send">发送</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        // 拖动整个容器
+        $('#ai-chat-container').draggable({
+            handle: '#ai-chat-icon',
+            containment: 'window',
+            cursor: 'move'
+        });
+
+        // 展开聊天框
+        $('#ai-chat-icon').click(function(e) {
+            $('#ai-chat-box').toggle();
+        });
+
+        // 关闭聊天框
+        $('#ai-chat-close').click(function() {
+            $('#ai-chat-box').hide();
+        });
+
+        // 发送消息
+        function sendMessage() {
+            const msg = $('#ai-chat-input').val().trim();
+            if (!msg) return;
+
+            $('#ai-chat-content').append(`<div style="text-align:right;margin-bottom:5px;">${msg}</div>`);
+            $('#ai-chat-input').val('');
+
+            setTimeout(() => {
+                $('#ai-chat-content').append(`<div style="color:#1E88E5;margin-bottom:5px;">AI助手：</div>
+        <div style="background:#f0f0f0;padding:8px;border-radius:4px;margin-bottom:10px;">您好，请问需要什么帮助？</div>`);
+                $('#ai-chat-content').scrollTop($('#ai-chat-content')[0].scrollHeight);
+            }, 500);
+        }
+
+        $('#ai-chat-send').click(sendMessage);
+        $('#ai-chat-input').keypress(function(e) {
+            if (e.which === 13) sendMessage();
+        });
+    });
+</script>
+
+</body>
+</html>

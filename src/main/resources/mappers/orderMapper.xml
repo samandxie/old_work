@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yu.Mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.yu.pojo.Order">
+        <id column="order_id" jdbcType="INTEGER" property="orderId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="consignee_name" jdbcType="VARCHAR" property="consigneeName" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="zip" jdbcType="VARCHAR" property="zip" />
+        <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+        <result column="status" jdbcType="BIT" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <association property="user_info" javaType="com.yu.pojo.User" column="user_id"
+                     select="com.yu.Mapper.UserMapper.selectByUserId" />
+        <association property="address_info" javaType="com.yu.pojo.AddressInfo" column="address_id"
+                     select="com.yu.Mapper.AddressInfoMapper.selectByAddressId" />
+        <collection property="orderItems" ofType="com.yu.pojo.OrderItem" column="order_id"
+                    select="com.yu.Mapper.OrderItemMapper.selectByOrderId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_id, user_id, consignee_name, address, zip, phone_number, status, create_time
+    </sql>
+
+    <select id="searchOrders" resultMap="BaseResultMap" parameterType="com.yu.pojo.Order">
+        select
+        <include refid="Base_Column_List" />
+        from orders
+        <where>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER}
+            </if>
+            <if test="consigneeName != null">
+                and  consignee_name = #{consigneeName,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>

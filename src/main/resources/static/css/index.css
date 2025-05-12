@@ -1,0 +1,63 @@
+.ai-chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99999 !important; /* 增加z-index确保在最上层 */
+    width: 300px;
+}
+.ai-chat-icon {
+    width: 50px;
+    height: 50px;
+    background: #009587;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.ai-chat-box {
+    display: none;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    margin-top: 10px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.ai-chat-header {
+    background: #009587;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px 8px 0 0;
+}
+.ai-chat-content {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+}
+.ai-chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+.ai-chat-input input {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.ai-chat-input button {
+    margin-left: 8px;
+    background: #009587;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}

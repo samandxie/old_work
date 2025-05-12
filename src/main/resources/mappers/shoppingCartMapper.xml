@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yu.Mapper.ShoppingCartMapper">
+    <resultMap id="BaseResultMap" type="com.yu.pojo.ShoppingCart">
+        <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="book_id" jdbcType="INTEGER" property="bookId" />
+        <result column="price" jdbcType="DECIMAL" property="price" />
+        <result column="quantity" jdbcType="INTEGER" property="quantity" />
+        <association property="book_info" javaType="com.yu.pojo.Book" column="book_id"
+                     select="com.yu.Mapper.BookMapper.selectByBookId"/>
+    </resultMap>
+</mapper>
